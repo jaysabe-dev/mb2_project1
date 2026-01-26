@@ -1,11 +1,16 @@
 #![no_main]
 #![no_std]
 
+mod life;
+use life::*;
+
+
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
 use cortex_m_rt::entry;
-use microbit::board::Board;
+use microbit::Board;
+
 
 #[entry]
 fn main() -> ! {
