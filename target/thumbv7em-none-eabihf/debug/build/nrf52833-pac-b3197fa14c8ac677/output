@@ -1,3 +1,0 @@
-cargo:rustc-link-search=/Users/jayabe/Rust/mb2_project1/target/thumbv7em-none-eabihf/debug/build/nrf52833-pac-b3197fa14c8ac677/out
-cargo:rerun-if-changed=device.x
-cargo:rerun-if-changed=build.rs
