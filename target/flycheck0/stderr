@@ -1,5 +1,5 @@
-   0.019140458s  INFO prepare_target{force=false package_id=mb2-template v0.1.0 (/Users/jayabe/Rust/mb2_project1) target="mb2-template"}: cargo::core::compiler::fingerprint: fingerprint error for mb2-template v0.1.0 (/Users/jayabe/Rust/mb2_project1)/Check { test: true }/TargetInner { name: "mb2-template", doc: true, ..: with_path("/Users/jayabe/Rust/mb2_project1/src/main.rs", Edition2024) }
-   0.019153917s  INFO prepare_target{force=false package_id=mb2-template v0.1.0 (/Users/jayabe/Rust/mb2_project1) target="mb2-template"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/jayabe/Rust/mb2_project1/target/thumbv7em-none-eabihf/debug/.fingerprint/mb2-template-c0e2488bf20ddd15/test-bin-mb2-template`
+   0.017820875s  INFO prepare_target{force=false package_id=mb2-template v0.1.0 (/Users/jayabe/Rust/mb2_project1) target="mb2-template"}: cargo::core::compiler::fingerprint: fingerprint error for mb2-template v0.1.0 (/Users/jayabe/Rust/mb2_project1)/Check { test: true }/TargetInner { name: "mb2-template", doc: true, ..: with_path("/Users/jayabe/Rust/mb2_project1/src/main.rs", Edition2024) }
+   0.017835708s  INFO prepare_target{force=false package_id=mb2-template v0.1.0 (/Users/jayabe/Rust/mb2_project1) target="mb2-template"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/jayabe/Rust/mb2_project1/target/thumbv7em-none-eabihf/debug/.fingerprint/mb2-template-c0e2488bf20ddd15/test-bin-mb2-template`
 
 Caused by:
     No such file or directory (os error 2)
