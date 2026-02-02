@@ -73,10 +73,27 @@ fn main() -> ! {
             button_action_taken = true;
             end_timer = 0;
         }
-        
 
         // GAME MAIN LOGIC
-        
+        if !button_action_taken {
+            // check if game is "done"
+            if done(&fb) {
+                if end_timer < 5 {
+                    end_timer += 1;
+                } else {
+                    // Rule if waited 5 frames with no input, new random board
+                    randomize_board(&mut fb, &mut rng);
+                    end_timer = 0;
+                }
+            } else {
+                // normal game loop, no changes
+                life(&mut fb);
+                end_timer = 0;
+            }
+        }
+
+
+
 
         timer.delay_ms(100u32);         // Program at 100 ms intervals (10 frames per second)
     }
