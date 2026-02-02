@@ -1,3 +1,24 @@
+/* Class:   Embedded Rust Winter 2026
+Author:     Jay Abegglen
+Prof:       Bart Massey
+Date:       Jan 31, 2026
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Extra information:
+While "A" button is held down, 
+    a) the board is re-randomized every frame
+    b) otherwise, when the B button is not ignored and is pressed, the board is
+    "complemented": every "on" cell is turned "off" and every "off" cell is turned
+    "on".
+
+    Then: The B button is then ignored for 5 frames (0.5s) 
+
+    ELSE : Otherwise, if the program reaches a state where all cells on the board are off,
+    the program waits 5 frames (0.5s). 
+    
+    If it has not received a button press, it then starts with a new random board
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 #![no_main]
 #![no_std]
 
@@ -13,32 +34,9 @@ use microbit::{
 };
 use nanorand::Rng;
 
-/*
-Class:  Embedded Rust Winter 2026
-Author: Jay Abegglen
-Prof:   Bart Massey
-Date:   Jan 31, 2026
-
-Extra information:
-// While "A" button is held down, 
-    // a) the board is re-randomized every frame
-    // b) otherwise, when the B button is not ignored and is pressed, the board is
-    // "complemented": every "on" cell is turned "off" and every "off" cell is turned
-    // "on".
-
-    // Then: The B button is then ignored for 5 frames (0.5s) 
-
-    //ELSE : Otherwise, if the program reaches a state where all cells on the board are off,
-    // the program waits 5 frames (0.5s). 
-    
-    // If it has not received a button press, it then starts with a new random board
-*/
-
 // imported game logic 
 mod life;
 use life::*;
-
-//remember this is a single core operation
 
 #[entry]
 fn main() -> ! {
@@ -125,7 +123,9 @@ fn complement_board(fb: &mut [[u8; 5]; 5]){
     }
 }
 
-/* Scrap code
+/*
+
+Scrap code
 state = match state {
             State::LedOff => {
                 board.display_pins.row1.set_high().unwrap();
