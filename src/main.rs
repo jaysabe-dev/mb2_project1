@@ -9,9 +9,30 @@ use embedded_hal::digital::InputPin;
 use microbit::{
     board::Board,
     display::blocking::Display,
-    hal::{prelude::*, Timer}
+    hal::Timer
 };
-use nanorand::{Rng, SeedableRng};
+use nanorand::Rng;
+
+/*
+Class:  Embedded Rust Winter 2026
+Author: Jay Abegglen
+Prof:   Bart Massey
+Date:   Jan 31, 2026
+
+Extra information:
+// While "A" button is held down, 
+    // a) the board is re-randomized every frame
+    // b) otherwise, when the B button is not ignored and is pressed, the board is
+    // "complemented": every "on" cell is turned "off" and every "off" cell is turned
+    // "on".
+
+    // Then: The B button is then ignored for 5 frames (0.5s) 
+
+    //ELSE : Otherwise, if the program reaches a state where all cells on the board are off,
+    // the program waits 5 frames (0.5s). 
+    
+    // If it has not received a button press, it then starts with a new random board
+*/
 
 // imported game logic 
 mod life;
@@ -38,19 +59,6 @@ fn main() -> ! {
     let mut b_ignore_timer = 0;
     let mut end_timer = 0;
 
-    // While "A" button is held down, 
-    // a) the board is re-randomized every frame
-    // b) otherwise, when the B button is not ignored and is pressed, the board is
-    // "complemented": every "on" cell is turned "off" and every "off" cell is turned
-    // "on".
-
-    // Then: The B button is then ignored for 5 frames (0.5s) 
-
-    //ELSE : Otherwise, if the program reaches a state where all cells on the board are off,
-    // the program waits 5 frames (0.5s). 
-    
-    // If it has not received a button press, it then starts with a new random board
-    
     loop {
         // -------------  Input
         let is_a_pressed = board.buttons.button_a.is_low().unwrap();
