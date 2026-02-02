@@ -58,10 +58,24 @@ fn main() -> ! {
         // -------------  Input
         let is_a_pressed = board.button_a.is_low().unwrap();
         let is_b_pressed = board.button_b.is_low().unwrap();
-
         let mut button_action_taken = false;
 
         // Rule: While A is held, re-randomize every frame
+        if is_a_pressed {
+            randomize_baord(&mut fb, &mut rng);
+            button_action_taken = true;
+            end_timer = 0; // reset if user interacts
+        }
+        // Rule: If B is pressed (and not ignored), complement the board
+        else if is_b_pressed && b_ignore_timer == 0 {
+            complement_board(&mut fb);
+            b_ignore_timer = 5;
+            button_action_taken = true;
+            end_timer = 0;
+        }
+        
+
+        // GAME MAIN LOGIC
         
 
         timer.delay_ms(100u32);         // Program at 100 ms intervals (10 frames per second)
