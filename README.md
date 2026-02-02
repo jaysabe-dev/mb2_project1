@@ -1,7 +1,5 @@
 # Game of Life :: MicroBit v2
 
-# Life
-
 **Author:** Jay Abegglem
 
 ## What I Did
