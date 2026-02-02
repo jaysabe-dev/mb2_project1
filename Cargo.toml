@@ -7,7 +7,7 @@ edition = "2024"
 cortex-m-rt = "0.7"
 embedded-hal = "1.0.0"
 microbit-v2 = "0.16"
-nanorand = "0.8.0"
+nanorand = { version = "0.7", default-features = false, features = ["pcg64"] }
 nostd = "0.1.6"
 panic-rtt-target = "0.2"
 rtt-target = "0.6"

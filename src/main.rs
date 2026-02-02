@@ -3,12 +3,13 @@
 
 use panic_rtt_target as _;
 use cortex_m_rt::entry;
-use rtt_target::{rprintln, rtt_init_print};
-use embedded_hal::{digital::InputPin, delay::DelayNs};
+use rtt_target::rtt_init_print;
+use embedded_hal::digital::InputPin;
+#[rustfmt::skip]
 use microbit::{
     board::Board,
     display::blocking::Display,
-    hal::{prelude::*, Timer, Rng as HwRng}
+    hal::{prelude::*, Timer}
 };
 use nanorand::{Rng, SeedableRng};
 
@@ -26,11 +27,7 @@ fn main() -> ! {
     let mut display = Display::new(board.display_pins);
     
     // Starts with a random board layout + random starting point for the life game (in life.rs)
-    let mut hw_rng = HwRng::new(board.RNG);
-    let mut seed_buffer = [0u8; 8];
-    hw_rng.read(&mut seed_buffer);
-    let seeed = u64::from_le_bytes(seed_buffer);
-    let mut rng = nanorand::Pcg64::new_seed(seed);
+    let mut rng = nanorand::Pcg64::new_seed(1);
 
     //init 5x5 2d array with microbit::hal::Rng as frame_buffer 
     let mut fb = [[0u8; 5]; 5];
@@ -56,13 +53,13 @@ fn main() -> ! {
     
     loop {
         // -------------  Input
-        let is_a_pressed = board.button_a.is_low().unwrap();
-        let is_b_pressed = board.button_b.is_low().unwrap();
+        let is_a_pressed = board.buttons.button_a.is_low().unwrap();
+        let is_b_pressed = board.buttons.button_b.is_low().unwrap();
         let mut button_action_taken = false;
 
         // Rule: While A is held, re-randomize every frame
         if is_a_pressed {
-            randomize_baord(&mut fb, &mut rng);
+            randomize_board(&mut fb, &mut rng);
             button_action_taken = true;
             end_timer = 0; // reset if user interacts
         }
@@ -92,10 +89,12 @@ fn main() -> ! {
             }
         }
 
-
-
-
-        timer.delay_ms(100u32);         // Program at 100 ms intervals (10 frames per second)
+        // Decrement the B-button ignore timer if it is active
+        if b_ignore_timer > 0 {
+            b_ignore_timer -= 1;
+        }
+        // Program at 100 ms intervals (10 frames per second)
+        display.show(&mut timer, fb, 100);
     }
 }
 
